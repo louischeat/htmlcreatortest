@@ -1,0 +1,47 @@
+
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Rocket</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="text-center text-4xl font-bold mb-8">HTML Rocket</div>
+    <div class="flex justify-center items-center h-screen">
+        <form id="myForm" class="w-full max-w-sm bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="input">
+                    Input
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="input" type="text" placeholder="Enter value">
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="result" class="text-center text-xl font-bold mt-4"></div>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let inputValue = document.getElementById('input').value;
+            fetch('/api/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({input: inputValue}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body></html>
